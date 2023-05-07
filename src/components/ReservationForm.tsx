@@ -7,21 +7,6 @@ import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
-const towers = [
-	{ value: 'a', label: 'Башня А' },
-	{ value: 'b', label: 'Башня Б' }
-];
-
-const floors = Array.from(Array(25), (_, i) => ({
-	value: i + 3,
-	label: `Этаж ${i + 3}`
-}));
-
-const rooms = Array.from(Array(10), (_, i) => ({
-	value: i + 1,
-	label: `Переговорка ${i + 1}`
-}));
-
 const Main = styled.form`
 	display: flex;
 	flex-direction: column;
@@ -60,28 +45,58 @@ const Button = styled.button`
 	font-size: 18px;
 `;
 
+interface TowersType {
+	value: string;
+	label: string;
+}
+
+const towers: TowersType[] = [
+	{ value: 'a', label: 'Башня А' },
+	{ value: 'b', label: 'Башня Б' }
+];
+
+interface FloorsType {
+	value: number;
+	label: string;
+}
+
+const floors: FloorsType[] = Array.from(Array(25), (_, i) => ({
+	value: i + 3,
+	label: `Этаж ${i + 3}`
+}));
+
+interface RoomsType {
+	value: number;
+	label: string;
+}
+
+const rooms: RoomsType[] = Array.from(Array(10), (_, i) => ({
+	value: i + 1,
+	label: `Переговорка ${i + 1}`
+}));
+
 const ReservationForm = () => {
-	const [tower, setTower] = useState<{ value: string; label: string }>();
-	const [floor, setFloor] = useState<{ value: number; label: string }>();
-	const [room, setRoom] = useState<{ value: number; label: string }>();
-	const [date, setDate] = useState<Date>();
+	const [selectedTower, setSelectedTower] = useState<TowersType | null>(null);
+	const [selectedFloor, setSelectedFloor] = useState<FloorsType | null>(null);
+	const [selectedRoom, setSelectedRoom] = useState<RoomsType | null>();
+	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 	const [comment, setComment] = useState('');
 
 	const handleClear = () => {
-		setTower({ value: '', label: '' });
-		setFloor({ value: 0, label: '' });
-		setRoom({ value: 0, label: '' });
-		setDate(new Date());
+		setSelectedTower({ value: '', label: '' });
+		setSelectedFloor({ value: 0, label: '' });
+		setSelectedRoom({ value: 0, label: '' });
+		setSelectedDate(null);
 		setComment('');
 	};
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		console.log({
-			tower,
-			floor,
-			room,
-			date,
+			selectedTower,
+			selectedFloor,
+			selectedRoom,
+			selectedDate,
 			comment
 		});
 
@@ -92,22 +107,37 @@ const ReservationForm = () => {
 		<Main onSubmit={handleSubmit}>
 			<Container>
 				<Label>Выберите башню:</Label>
-				<Select options={towers} value={tower} onChange={setTower} />
+				<Select
+					options={towers}
+					value={selectedTower}
+					onChange={(option: TowersType | null) => setSelectedTower(option)}
+				/>
 			</Container>
 
 			<Container>
 				<Label>Выберите этаж:</Label>
-				<Select options={floors} value={floor} onChange={setFloor} />
+				<Select
+					options={floors}
+					value={selectedFloor}
+					onChange={(option: FloorsType | null) => setSelectedFloor(option)}
+				/>
 			</Container>
 
 			<Container>
 				<Label>Выберите переговорку:</Label>
-				<Select options={rooms} value={room} onChange={setRoom} />
+				<Select
+					options={rooms}
+					value={selectedRoom}
+					onChange={(option: RoomsType | null) => setSelectedRoom(option)}
+				/>
 			</Container>
 
 			<Container>
 				<Label>Выберите дату и время:</Label>
-				<DatePicker value={date} onChange={setDate} />
+				<DatePicker
+					value={selectedDate}
+					onChange={(option: Date | null) => setSelectedDate(option)}
+				/>
 			</Container>
 
 			<Container>
@@ -117,7 +147,7 @@ const ReservationForm = () => {
 					onChange={e => setComment(e.target.value)}
 					style={{
 						backgroundColor: 'lightgray',
-						height: '30px',
+						height: 30,
 						padding: '20px 20px',
 						fontSize: '20px',
 						maxWidth: '100%'
