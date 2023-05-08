@@ -19,6 +19,18 @@ const Text = styled.h1`
 	text-align: center;
 	width: 75%;
 	margin: 20px 0 20px 0;
+
+	@media (max-width: 500px) {
+		width: 95%;
+		padding: 5px 10px;
+		font-size: 24px;
+	}
+
+	@media (max-width: 810px) {
+		width: 95%;
+		padding: 10px 20px;
+		font-size: 24px;
+	}
 `;
 
 const App = () => {

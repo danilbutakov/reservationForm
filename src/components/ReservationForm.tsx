@@ -16,6 +16,12 @@ const Main = styled.form`
 	padding: 20px 30px;
 	border-radius: 16px;
 	width: 75%;
+
+	@media (max-width: 810px) {
+		width: 95%;
+		padding: 10px 15px;
+		margin-bottom: 20px;
+	}
 `;
 
 const Container = styled.div`
@@ -23,6 +29,17 @@ const Container = styled.div`
 	flex-direction: column;
 	width: 75%;
 	margin-bottom: 10px;
+
+	@media (max-width: 810px) {
+		width: 90%;
+		padding: 10px 15px;
+		margin-bottom: 20px;
+	}
+
+	@media (max-width: 500px) {
+		padding: 5px 10px;
+		margin-bottom: 10px;
+	}
 `;
 
 const Label = styled.label`
@@ -30,11 +47,19 @@ const Label = styled.label`
 	font-weight: 400;
 `;
 
-const Section = styled.div`
+const ButtonSection = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	width: 50%;
+
+	@media (max-width: 810px) {
+		width: 70%;
+	}
+
+	@media (max-width: 500px) {
+		width: 80%;
+	}
 `;
 
 const Button = styled.button`
@@ -43,6 +68,10 @@ const Button = styled.button`
 	padding: 20px 20px;
 	color: white;
 	font-size: 18px;
+
+	@media (max-width: 810px) {
+		padding: 10px 10px;
+	}
 `;
 
 interface TowersType {
@@ -155,12 +184,12 @@ const ReservationForm = () => {
 				/>
 			</Container>
 
-			<Section>
+			<ButtonSection>
 				<Button type='submit'>Отправить</Button>
 				<Button type='button' onClick={handleClear}>
 					Очистить
 				</Button>
-			</Section>
+			</ButtonSection>
 		</Main>
 	);
 };
